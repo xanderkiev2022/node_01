@@ -1,13 +1,14 @@
 const fs = require("fs").promises;
 const path = require("path");
+const { v4 } = require("uuid");
 
-const contactsPath = path.resolve("./contacts.js");
+const contactsPath = path.resolve("./db/contacts.json");
 
 async function listContacts() {
     try {
       const data = await fs.readFile(contactsPath, "utf8");
       const contacts = JSON.parse(data);
-      const listOfContacts = contacts.map(({ contact }) => {
+      const listOfContacts = contacts.map((contact) => {
         return {
           Name: contact.name,
           Email: contact.email,
@@ -49,7 +50,7 @@ async function addContact(name, email, phone) {
     try {
       const data = await fs.readFile(contactsPath, "utf8");
       const contacts = JSON.parse(data);
-      const newContact = { id: Date.now(), name, email, phone };
+      const newContact = { id: v4(), name, email, phone };
       const updatedContacts = [...contacts, newContact];
       await fs.writeFile(contactsPath, JSON.stringify(updatedContacts), "utf8");
     } catch (error) {
@@ -57,9 +58,4 @@ async function addContact(name, email, phone) {
     }
 }
 
-module.exports = {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-};
+module.exports = { listContacts, getContactById, removeContact, addContact };
