@@ -1,5 +1,4 @@
 const { Command } = require("commander");
-// const argv = require("yargs").argv;
 const {
   listContacts,
   getContactById,
@@ -22,29 +21,19 @@ const argv = program.opts();
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-          const contacts = await listContacts();
-          console.table(contacts);
+      await listContacts();
       break;
 
     case "get":
-      const contactById = await getContactById(id);
-      if (!contactById) {
-        throw new Error(`there is no user with id ${id}`);
-      }
-      console.log(contactById);
+      await getContactById(id);
       break;
 
     case "add":
-          const contact = await addContact(name, email, phone);
-          console.log(contact);
+      await addContact(name, email, phone);
       break;
 
     case "remove":
-      const contactToRemove = await removeContact(id);
-      if (!contactToRemove) {
-        throw new Error(`there is no user with id ${id}`);
-      }
-      console.table(contactToRemove);
+      await removeContact(id);
       break;
 
     default:
