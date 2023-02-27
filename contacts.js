@@ -1,10 +1,8 @@
 const fs = require("fs").promises;
 const { nanoid } = require("nanoid");
+const path = require("path");
 
-// Альтернативний спосіб прописати шлях до файлу
-// const path = require("path");
-// const contactsPath = path.resolve("./db/contacts.json");
-const contactsPath = __dirname + "/db/contacts.json";
+const contactsPath = path.join(__dirname + "/db/contacts.json");
 
 async function listContacts() {
     try {
